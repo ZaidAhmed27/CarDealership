@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDealership.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -12,5 +12,13 @@ namespace CarDealership.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Elantra", Model = 2023},
+                new Category { Id = 2, Name = "Cambry", Model = 2022}
+                );
+        }
     }
 }
